@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caleb | Developer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="typed.js/typed.umd.js"></script>
+    <script>var submitted = false</script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#121212',
+                        darkSecondary: '#1e1e1e',
+                        accent: '#3b82f6',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(100px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        typewriter: {
+                            '0%': { width: '0%' },
+                            '100%': { width: '100%' },
+                        },
+                        blink: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0' },
+                        }
+                    },
+                    animation: {
+                        float: 'float 6s ease-in-out infinite',
+                        fadeIn: 'fadeIn 1.5s ease-out forwards',
+                        slideUp: 'slideUp 1s ease-out forwards',
+                        typewriter: 'typewriter 4s steps(40) forwards',
+                        blink: 'blink 1s step-end infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        #typed-box {
+            height: 30px;  /* Set a fixed height, adjust as needed */
+            overflow: hidden;  /* Prevents the text from overflowing */
+            position: relative;  /* Ensure proper positioning of the cursor */
+        }
+
+        .typed-cursor {
+            opacity: 1;
+            font-size: 22px;
+            line-height: 1;
+            margin-top: 3px;
+        }
+
+        @media (max-width: 767px) {
+          #hero-bg {
+            background: url("hero_mobile.jpg") calc(50% + 5px) center no-repeat !important;
+            filter: brightness(40%) !important;
+            background-size: cover !important;
+          }
+
+          .typed-cursor {
+            margin-top: 1px;
+        }
+        }
+
+        #hero-bg {
+            background-image: url('hero_dark.png');
+            filter: brightness(50%);
+            background-size: cover;
+            background-size: cover;
+            background-position: right;
+            z-index: 0;
+        }
+
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50% }
+            50% { background-position: 100% 50% }
+            100% { background-position: 0% 50% }
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #121212 0%, #1e1e24 25%, #252540 50%, #1e1e24 75%, #121212 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -25px;
+            top: 3px;
+            height: 15px;
+            width: 15px;
+            border-radius: 50%;
+            background-color: #3b82f6;
+            z-index: 1;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: -19px;
+            top: 18px;
+            height: calc(100% + 30px);
+            width: 3px;
+            background-color: #2a2a2a;
+            z-index: 0;
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .animate-on-scroll.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .stagger-delay-1 { transition-delay: 0.1s; }
+        .stagger-delay-2 { transition-delay: 0.2s; }
+        .stagger-delay-3 { transition-delay: 0.3s; }
+        .stagger-delay-4 { transition-delay: 0.4s; }
+        .stagger-delay-5 { transition-delay: 0.5s; }
+    </style>
+</head>
+<body class="bg-darkBg text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-darkBg/80 backdrop-blur-sm transition-opacity opacity-0 duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold">Caleb<span class="text-accent">.</span></a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="hover:text-accent transition">Home</a>
+                <a href="#about" class="hover:text-accent transition">About</a>
+                <a href="#resume" class="hover:text-accent transition">Resume</a>
+                <a href="#projects" class="hover:text-accent transition">Projects</a>
+                <a href="#contact" class="hover:text-accent transition">Contact</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-darkSecondary">
+                <a href="#home" class="block px-3 py-2 hover:bg-gray-800 rounded">Home</a>
+                <a href="#about" class="block px-3 py-2 hover:bg-gray-800 rounded">About</a>
+                <a href="#resume" class="block px-3 py-2 hover:bg-gray-800 rounded">Resume</a>
+                <a href="#projects" class="block px-3 py-2 hover:bg-gray-800 rounded">Projects</a>
+                <a href="#contact" class="block px-3 py-2 hover:bg-gray-800 rounded">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="h-screen flex items-center justify-center relative overflow-hidden parallax-container">
+        <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-darkBg/80 to-transparent"></div>
+        <div id="hero-bg" class="absolute inset-0 bg-center bg-cover"></div>
+        <div class="container mx-auto px-6 z-10 text-center">
+            <h1 id="introduction" class="text-5xl md:text-7xl font-bold opacity-0 mb-4">Hi, I'm Caleb<span class="text-accent">.</span></h1>
+            <div id="typed-box" class="flex justify-center mb-8">
+                <span id="typed-strings">
+                    <span class="opacity-0">Software Developer</span>
+                    <span class="opacity-0">Problem Solver</span>
+                    <span class="opacity-0">Passionate Engineer</span>
+                    <span class="opacity-0">Creative Thinker</span>
+                    <span class="opacity-0">Lifelong Learner</span>
+                    <span class="opacity-0">Front-End Specialist</span>
+                    <span class="opacity-0">Back-End Explorer</span>
+                    <span class="opacity-0">Tech Enthusiast</span>
+                    <span class="opacity-0">Innovative Coder</span>
+                    <span class="opacity-0">Agile Team Player</span>
+                    <span class="opacity-0">Clean Code Advocate</span>
+                    <span class="opacity-0">Detail-Oriented Developer</span>
+                    <span class="opacity-0">User-Centered Designer</span>
+                    <span class="opacity-0">JavaScript Aficionado</span>
+                    <span class="opacity-0">React Developer</span>
+                    <span class="opacity-0">Code Optimizer</span>
+                    <span class="opacity-0">Debugging Expert</span>
+                    <span class="opacity-0">Dark Mode Advocate</span>
+                    <span class="opacity-0">CSS Wizard (sometimes)</span>
+                    <span class="opacity-0">Keyboard Shortcut Addict</span>
+                    <span class="opacity-0">Git Rebase Survivor</span>
+                    <span class="opacity-0">Bug Whisperer</span>
+                    <span class="opacity-0">Stack Overflow Archaeologist</span>
+                    <span class="opacity-0">Semicolon Philosopher</span>
+                    <span class="opacity-0">404 Error Detector</span>
+                    <span class="opacity-0">Commit Message Poet</span>
+                    <span class="opacity-0">Fueled by Cream Soda and Questionable Life Choices</span>
+                    <span class="opacity-0">Syntax Sorcerer</span>
+                    <span class="opacity-0">Debugger of Destiny</span>
+                    <span class="opacity-0">The Boy Who Googled</span>
+                    <span class="opacity-0">Doom Scroller by Night, Dev by Day</span>
+                    <span class="opacity-0">"It Works on My Machine" Enthusiast</span>
+                    <span class="opacity-0">Architect of Overengineered Solutions</span>
+                    <span class="opacity-0">Feature Creep Enabler</span>
+                    <span class="opacity-0">Certified Rubber Duck Therapist</span>
+                    <span class="opacity-0">Lorem Ipsum Prophet</span>
+                    <span class="opacity-0">Professional Button Clicker</span>
+                    <span class="opacity-0">Master of Edge Cases</span>
+                    <span class="opacity-0">Guardian of the Sacred White Space</span>
+                    <span class="opacity-0">God of Infinite Loops</span>
+                    <span class="opacity-0">You still here?</span>
+                    <span class="opacity-0">Error Message Collector</span>
+                    <span class="opacity-0">One with the Console Logs</span>
+                    <span class="opacity-0">Dark Theme Evangelist</span>
+                    <span class="opacity-0">Dev Who Definitely Read the Docs</span>
+                    <span class="opacity-0">Zero Bugs Given</span>
+                    <span class="opacity-0">Banisher of Internet Explorer</span>
+                    <span class="opacity-0">Summoned Here by a Merge Conflict</span>
+                </span>
+                <span id="typed" class="text-xl md:text-2xl text-gray-300"></span>
+                <span class="opacity-0">|</span>
+            </div>
+            <div class="flex justify-center space-x-4 mb-8 opacity-0" id="social-icons">
+                <a href="https://x.com/realcalebmsmith" class="text-gray-400 hover:text-accent transition transform hover:scale-110">
+                    <i class="fab fa-twitter text-xl"></i>
+                </a>
+                <a href="https://github.com/Fyresmith" class="text-gray-400 hover:text-accent transition transform hover:scale-110">
+                    <i class="fab fa-github text-xl"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/smith-caleb/" class="text-gray-400 hover:text-accent transition transform hover:scale-110">
+                    <i class="fab fa-linkedin text-xl"></i>
+                </a>
+            </div>
+            <a href="#projects" class="px-6 py-3 bg-accent text-white rounded-full hover:bg-blue-700 transition opacity-0 transform hover:scale-105" id="cta-button">View My Work</a>
+        </div>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-darkSecondary">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-12 text-center animate-on-scroll">About Me<span class="text-accent">.</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="animate-on-scroll stagger-delay-1">
+                <h3 class="text-2xl font-semibold mb-4">Who I Am</h3>
+                <div class="flex flex-col md:flex-row gap-6 items-center">
+                    <div class="w-full md:w-1/3 mb-4 md:mb-0">
+                        <img src="profile-picture.png" alt="Caleb Smith" class="w-full h-auto rounded-xl filter grayscale transition-all duration-300 shadow-lg" />
+                    </div>
+                    <div class="w-full md:w-2/3">
+                        <p class="text-gray-300 mb-6">
+                            I'm a passionate developer focused on creating elegant, efficient, and user-friendly solutions. With a strong foundation in programming fundamentals and a curious mindset, I enjoy tackling complex problems and turning ideas into reality.
+                        </p>
+                        <p class="text-gray-300 mb-6">
+                            My journey in tech began with a fascination for how things work, which evolved into a career building software that makes a difference. I'm constantly learning and experimenting with new technologies to expand my skillset.
+                        </p>
+                    </div>
+                </div>
+            </div>
+                <div class="animate-on-scroll stagger-delay-2">
+                  <h3 class="text-2xl font-semibold mb-4">My Toolbox</h3>
+                  <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <!-- Tool card -->
+                    <div class="p-4 bg-darkBg rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-md group">
+                      <div class="flex items-center mb-2">
+                        <i class="fab fa-python text-blue-500 text-2xl mr-3"></i>
+                        <span class="font-medium">Python</span>
+                      </div>
+                      <p class="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">Flask, Django, web development</p>
+                    </div>
+                    
+                    <!-- Tool card -->
+                    <div class="p-4 bg-darkBg rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-md group">
+                      <div class="flex items-center mb-2">
+                        <i class="fab fa-java text-red-500 text-2xl mr-3"></i>
+                        <span class="font-medium">Java</span>
+                      </div>
+                      <p class="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">Jakarta EE, enterprise applications</p>
+                    </div>
+                    
+                    <!-- Tool card -->
+                    <div class="p-4 bg-darkBg rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-md group">
+                      <div class="flex items-center mb-2">
+                        <i class="fab fa-js-square text-yellow-400 text-2xl mr-3"></i>
+                        <span class="font-medium">Frontend</span>
+                      </div>
+                      <p class="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">HTML, CSS, JavaScript/Typescript, React, Bootstrap</p>
+                    </div>
+                    
+                    <!-- Tool card -->
+                    <div class="p-4 bg-darkBg rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-md group">
+                      <div class="flex items-center mb-2">
+                        <i class="fas fa-code text-green-400 text-2xl mr-3"></i>
+                        <span class="font-medium">C++</span>
+                      </div>
+                      <p class="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">Data structures, algorithms, problem solving</p>
+                    </div>
+                    
+                    <!-- Tool card -->
+                    <div class="p-4 bg-darkBg rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-md group">
+                      <div class="flex items-center mb-2">
+                        <i class="fas fa-database text-purple-400 text-2xl mr-3"></i>
+                        <span class="font-medium">Databases</span>
+                      </div>
+                      <p class="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">SQL, JSON, data management</p>
+                    </div>
+                    
+                    <!-- Tool card -->
+                    <div class="p-4 bg-darkBg rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-md group">
+                      <div class="flex items-center mb-2">
+                        <i class="fas fa-project-diagram text-blue-300 text-2xl mr-3"></i>
+                        <span class="font-medium">Development</span>
+                      </div>
+                      <p class="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">Git, Electron, software testing, project management</p>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section id="resume" class="py-20 bg-darkBg">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-12 text-center animate-on-scroll">My Resume<span class="text-accent">.</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Education Column -->
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6 animate-on-scroll stagger-delay-1">Education</h3>
+                    <div class="relative pl-8">
+                        <!-- Timeline Item 1 -->
+                        <div class="relative mb-12 timeline-item animate-on-scroll stagger-delay-2">
+                            <div class="p-6 bg-darkSecondary rounded-lg shadow-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="text-xl font-medium text-white">Bachelor of Science in Computer Engineering</h4>
+                                    <span class="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">2024-Present</span>
+                                </div>
+                                <p class="text-gray-400 mt-1">Kennesaw State University</p>
+                                <p class="mt-4 text-gray-300">
+                                    Focused on hardware design, embedded systems, and computer architecture. Coursework includes digital circuits, microprocessors, and signal processing.
+                                </p>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    <span class="px-2 py-1 bg-darkBg rounded-full text-xs">Embedded Systems</span>
+                                    <span class="px-2 py-1 bg-darkBg rounded-full text-xs">Circuit Design</span>
+                                    <span class="px-2 py-1 bg-darkBg rounded-full text-xs">Microprocessor Architecture</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Timeline Item 2 -->
+                        <div class="relative mb-12 timeline-item animate-on-scroll stagger-delay-3">
+                            <div class="p-6 bg-darkSecondary rounded-lg shadow-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="text-xl font-medium text-white">Associates of Applied Science in Computer Programming</h4>
+                                    <span class="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">2020-2023</span>
+                                </div>
+                                <p class="text-gray-400 mt-1">Gwinnett Technical College</p>
+                                <p class="mt-4 text-gray-300">
+                                    Starting as a dual-enrollment student in high school, I earned a two-year degree which gave me extensive experience in Java and C++, as well as the basics of project management.
+                                </p>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    <span class="px-2 py-1 bg-darkBg rounded-full text-xs">Computer Science</span>
+                                    <span class="px-2 py-1 bg-darkBg rounded-full text-xs">Java</span>
+                                    <span class="px-2 py-1 bg-darkBg rounded-full text-xs">C++</span>
+                                    <span class="px-2 py-1 bg-darkBg rounded-full text-xs">Project Management</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Experience Column -->
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6 animate-on-scroll stagger-delay-1">Experience</h3>
+                    <div class="relative pl-8">
+                        <!-- Timeline Item 1 -->
+                        <div class="relative mb-12 timeline-item animate-on-scroll stagger-delay-2">
+                            <div class="p-6 bg-darkSecondary rounded-lg shadow-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="text-xl font-medium text-white">Junior Software Developer</h4>
+                                    <span class="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">2024-Present</span>
+                                </div>
+                                <p class="text-gray-400 mt-1">Vivlio Health</p>
+                                <p class="mt-4 text-gray-300">
+                                    Contributing as a Junior Developer within a dynamic, cross-functional team, focusing primarily on front-end development. Actively expanding technical expertise in React.js, Node.js, and AWS, while collaborating on innovative solutions and ensuring high-quality, responsive user interfaces.
+                                </p>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    <span class="px-2 py-1 bg-darkBg rounded-full text-xs">React.js</span>
+                                    <span class="px-2 py-1 bg-darkBg rounded-full text-xs">Node.js</span>
+                                    <span class="px-2 py-1 bg-darkBg rounded-full text-xs">AWS</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Timeline Item 2 -->
+                        <div class="relative mb-12 timeline-item animate-on-scroll stagger-delay-3">
+                            <div class="p-6 bg-darkSecondary rounded-lg shadow-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="text-xl font-medium text-white">Travel Staffer</h4>
+                                    <span class="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">2021-2022</span>
+                                </div>
+                                <p class="text-gray-400 mt-1">TeenPact</p>
+                                <p class="mt-4 text-gray-300">
+                                    Collaborated with fellow Staffers to execute State Classes, week-long leadership programs conducted in state capitals nationwide. Coordinated on-stage elements, including teaching, public speaking, and small-group instruction.
+                                </p>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    <span class="px-2 py-1 bg-darkBg rounded-full text-xs">Communication</span>
+                                    <span class="px-2 py-1 bg-darkBg rounded-full text-xs">Teamwork</span>
+                                    <span class="px-2 py-1 bg-darkBg rounded-full text-xs">Leadership</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Timeline Item 3 -->
+                        <div class="relative mb-12 timeline-item animate-on-scroll stagger-delay-4">
+                            <div class="p-6 bg-darkSecondary rounded-lg shadow-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="text-xl font-medium text-white">Lead Intern</h4>
+                                    <span class="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">2019-2022</span>
+                                </div>
+                                <p class="text-gray-400 mt-1">Perimeter Church</p>
+                                <p class="mt-4 text-gray-300">
+                                    Led a team of student interns, guiding the Worship Team and facilitating classes while providing mentorship to both interns and team leaders. Reviewed and refined curricula, enhanced educational resources, and managed logistical operations, including scheduling, communications, and daily activities. Fostered a strong sense of community within the team and contributed to ministry planning efforts.
+                                </p>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    <span class="px-2 py-1 bg-darkBg rounded-full text-xs">Leadership</span>
+                                    <span class="px-2 py-1 bg-darkBg rounded-full text-xs">Development</span>
+                                    <span class="px-2 py-1 bg-darkBg rounded-full text-xs">Ministry</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center animate-on-scroll">
+                <a href="Caleb-Smith-Resume.pdf" download="Caleb-Smith-Resume.pdf" class="px-6 py-3 bg-accent text-white rounded-full hover:bg-blue-700 transition transform hover:scale-105 inline-flex items-center">
+                    <i class="fas fa-download mr-2"></i> Download Full Resume
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-darkSecondary">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-12 text-center animate-on-scroll">My Projects<span class="text-accent">.</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+                <!-- Projects will be loaded here via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-darkBg">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-12 text-center animate-on-scroll">
+                Get In Touch<span class="text-accent">.</span>
+            </h2>
+            <div class="max-w-3xl mx-auto">
+                <form id="contact-form"
+                    action="https://docs.google.com/forms/d/e/1FAIpQLSeGD3tMNRzB5LyrIBbvppMdjohR6VL6T2850oYF-HLDbSrpcg/formResponse"
+                    method="POST"
+                    target="hidden_iframe"
+                    onsubmit="submitted=true; setTimeout(() => document.getElementById('contact-form').reset(), 100);"
+                    class="space-y-6">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="animate-on-scroll stagger-delay-1">
+                            <label for="entry.1839778145" class="block mb-2">Name</label>
+                            <input type="text" name="entry.1839778145" id="entry.1839778145"
+                                class="w-full p-3 bg-darkSecondary border border-gray-700 rounded-md focus:outline-none focus:border-accent transition"
+                                required>
+                        </div>
+                        <div class="animate-on-scroll stagger-delay-2">
+                            <label for="entry.1170995772" class="block mb-2">Email</label>
+                            <input type="email" name="entry.1170995772" id="entry.1170995772"
+                                class="w-full p-3 bg-darkSecondary border border-gray-700 rounded-md focus:outline-none focus:border-accent transition"
+                                required>
+                        </div>
+                    </div>
+                    
+                    <div class="animate-on-scroll stagger-delay-3">
+                        <label for="entry.1635469236" class="block mb-2">Subject</label>
+                        <input type="text" name="entry.1635469236" id="entry.1635469236"
+                            class="w-full p-3 bg-darkSecondary border border-gray-700 rounded-md focus:outline-none focus:border-accent transition"
+                            required>
+                    </div>
+                    
+                    <div class="animate-on-scroll stagger-delay-4">
+                        <label for="entry.2058071255" class="block mb-2">Message</label>
+                        <textarea name="entry.2058071255" id="entry.2058071255" rows="5"
+                            class="w-full p-3 bg-darkSecondary border border-gray-700 rounded-md focus:outline-none focus:border-accent transition"
+                            required></textarea>
+                    </div>
+                    
+                    <button type="submit"
+                        class="px-6 py-3 bg-accent text-white rounded-full hover:bg-blue-700 transition w-full md:w-auto transform hover:scale-105 animate-on-scroll stagger-delay-5">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hidden iframe to handle form submission -->
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) { alert('Thanks for your message! Your form has been submitted, and I will get back to you soon!'); }"></iframe>
+
+
+    <!-- viewform?usp=pp_url&entry.1839778145=garbageName&entry.1170995772=garbageEmail&entry.1635469236=garbageSubject&entry.2058071255=garbageMessage -->
+
+    <!-- Footer -->
+    <footer class="py-8 bg-darkBg border-t border-gray-800">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="https://x.com/realcalebmsmith" class="text-gray-400 hover:text-accent transition transform hover:scale-110">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://github.com/Fyresmith" class="text-gray-400 hover:text-accent transition transform hover:scale-110">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/smith-caleb/" class="text-gray-400 hover:text-accent transition transform hover:scale-110">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+            <p class="text-gray-400">&copy; <span id="current-year"></span> Caleb. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize nav visibility immediately for mobile
+        function initNavVisibility() {
+          const nav = document.querySelector('nav');
+          
+          // Set initial state based on viewport
+          if (window.innerWidth <= 768) {
+            nav.classList.add('opacity-0', 'pointer-events-none');
+            nav.classList.remove('opacity-100');
+          } else {
+            nav.classList.remove('opacity-0', 'pointer-events-none');
+            nav.classList.add('opacity-100');
+          }
+          
+          // Ensure transition is applied after initial state is set
+          setTimeout(() => {
+            nav.classList.add('transition-opacity', 'duration-300');
+          }, 50);
+        }
+
+        function handleMobileNavigation() {
+          const nav = document.querySelector('nav');
+          const splashHeight = document.querySelector('#home').offsetHeight;
+          const scrollPosition = window.scrollY;
+          
+          if (window.innerWidth <= 768) { // Mobile viewport
+            if (scrollPosition < splashHeight - 100) {
+              nav.classList.add('opacity-0', 'pointer-events-none');
+              nav.classList.remove('opacity-100');
+            } else {
+              nav.classList.remove('opacity-0', 'pointer-events-none');
+              nav.classList.add('opacity-100');
+            }
+          } else {
+            // Desktop - always show nav
+            nav.classList.remove('opacity-0', 'pointer-events-none');
+            nav.classList.add('opacity-100');
+          }
+        }
+
+        // Call initialization as soon as possible
+        document.addEventListener('DOMContentLoaded', initNavVisibility);
+
+        // Call on scroll and resize
+        window.addEventListener('scroll', handleMobileNavigation);
+        window.addEventListener('resize', handleMobileNavigation);
+        window.addEventListener('load', handleMobileNavigation);
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.querySelector('nav').classList.add('transition-opacity', 'duration-300');
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const typed = new Typed('#typed', {
+                    stringsElement: '#typed-strings',
+                    typeSpeed: 50,
+                    backSpeed: 30,
+                    backDelay: 1500,
+                    startDelay: 1000,
+                    loop: true,
+                    showCursor: true,
+                    cursorChar: '|'
+                });
+            }, 500); // Short delay to ensure DOM is ready
+        });
+
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                window.scrollTo({
+                    top: targetElement.offsetTop - 70,
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu after click
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        const typewriterElement = document.querySelector('.typewriter');
+        if (typewriterElement) {
+            // Make sure the animation styles are properly applied
+            typewriterElement.style.animation = "typewriter 4s steps(40) 1s forwards, blink 1s step-end infinite";
+            typewriterElement.style.width = "0";
+        }
+
+        // Animate hero elements
+        setTimeout(() => {
+            const ctaButton = document.getElementById('introduction');
+            if (ctaButton) {
+                ctaButton.style.opacity = "1";
+                ctaButton.style.transition = "opacity 1.5s ease-out";
+            }
+        }, 100);
+
+        setTimeout(() => {
+        const socialIcons = document.getElementById('social-icons');
+            if (socialIcons) {
+                socialIcons.style.opacity = "1";
+                socialIcons.style.transition = "opacity 1.5s ease-out";
+            }
+        }, 1000);
+
+        setTimeout(() => {
+            const ctaButton = document.getElementById('cta-button');
+            if (ctaButton) {
+                ctaButton.style.opacity = "1";
+                ctaButton.style.transition = "opacity 1.5s ease-out";
+            }
+        }, 1500);
+
+        // Parallax effect for hero section
+        const parallaxElements = document.querySelectorAll('.parallax-element');
+        
+        window.addEventListener('scroll', function() {
+            let scrollPosition = window.pageYOffset;
+            
+            // Parallax effect
+            parallaxElements.forEach(element => {
+                const speed = 0.5;
+                element.style.transform = `translateY(${scrollPosition * speed}px)`;
+            });
+        });
+
+        // Project data - replace with your actual projects
+        const projects = [
+            {
+                title: "PyShort",
+                description: "A simple python script that allows users to generate short videos to post on the web.",
+                tags: ["Python", "ffmpeg", "Video"],
+                image: "pyshort.png",
+                github: "https://github.com/fyresmith/pyshort",
+            },
+            {
+                title: "PyWiki",
+                description: "A personally-designed wiki used to organize my writing and worldbuilding. Uses a python flask server to render and serve pages.",
+                tags: ["Python", "Flask", "Wiki"],
+                image: "pywiki-web.png",
+                github: "https://github.com/fyresmith/pywiki",
+            },
+            {
+                title: "PyWiki 2.0",
+                description: "My original PyWiki project rewritten entirely as a full-stack project. Hosted on python-anywhere with a React.js frontend, and a REST API implemented in flask python.",
+                tags: ["React.js", "Python", "Full Stack"],
+                image: "pywiki-react.png",
+                github: "https://github.com/fyresmith/pywiki-react",
+            },
+            {
+                title: "SellBuy",
+                description: "A comprehensive eCommerce platform written in Java EE. Implemented as a dynamic Java Web App, it provides a user-friendly interface including features such as: allowing users to search for products products, add them to carts, complete purchases, create their own products, and more.",
+                tags: ["Java EE", "Web App", "Full Stack"],
+                image: "sellbuy.png",
+                github: "https://github.com/fyresmith/sellbuy",
+                // live: "https://project-four.example.com"
+            },
+            {
+                title: "Fetchtube",
+                description: "A simple CLI command tool implemented in python which downloads youtube videos as MP4s or MP3s given a link.",
+                tags: ["Python", "ffmpeg", "Youtube"],
+                image: "fetchtube.png",
+                github: "https://github.com/fyresmith/fetchtube",
+                // live: "https://project-five.example.com"
+            },
+            {
+                title: "Project Epic (WIP)",
+                description: "My current Work-In-Progress, Epic is intended to be a full IWE (integrated writing environment), allowing writers to develop manuscripts, build their worlds, and collaborate with others live on their projects.",
+                tags: ["Electron", "React.js", "Desktop App"],
+                image: "epic.jpg",
+                github: "https://calebmsmith.com",
+                // live: "https://project-six.example.com"
+            }
+        ];
+
+        // Populate projects with animations
+        const projectsGrid = document.getElementById('projects-grid');
+        projects.forEach((project, index) => {
+            const projectCard = document.createElement('div');
+            projectCard.className = 'bg-darkBg rounded-lg overflow-hidden shadow-lg hover:shadow-accent/20 transition-all duration-300 animate-on-scroll flex flex-col h-full';
+            projectCard.style.transitionDelay = `${0.1 * (index % 3)}s`;
+            
+            projectCard.innerHTML = `
+                <div class="relative overflow-hidden group">
+                    <img src="${project.image}" alt="${project.title}" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <a href="${project.github}" target="_blank" class="absolute inset-0 bg-accent/80 opacity-0 group-hover:opacity-90 transition-opacity duration-300 flex flex-col justify-center items-center p-4">
+                    </a>
+                </div>
+                <div class="p-6 flex-grow flex flex-col">
+                    <h3 class="text-xl font-semibold mb-2">${project.title}</h3>
+                    <p class="text-gray-400 mb-4">${project.description}</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        ${project.tags.map(tag => `<span class="px-3 py-1 bg-darkSecondary rounded-full text-sm">${tag}</span>`).join('')}
+                    </div>
+                    <div class="mt-auto pt-4 flex justify-center gap-3">
+                        <a href="${project.github}" class="px-4 py-2 bg-darkSecondary text-white rounded-full font-medium transition-colors duration-300 hover:bg-gray-700 inline-flex items-center" target="_blank">
+                            <i class="fab fa-github mr-1"></i> View Code
+                        </a>
+                        ${project.live ? `
+                        <a href="${project.live}" class="px-4 py-2 bg-accent text-white rounded-full font-medium transition-colors duration-300 hover:bg-blue-700 inline-flex items-center" target="_blank">
+                            <i class="fas fa-external-link-alt mr-1"></i> Live Demo
+                        </a>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            projectsGrid.appendChild(projectCard);
+        });
+
+        // Animate elements on scroll
+        function handleScrollAnimations() {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 50) {
+                    element.classList.add('active');
+                }
+            });
+            
+            // Animate skill bars when in view
+            const skillSection = document.getElementById('about');
+            if (skillSection.getBoundingClientRect().top < window.innerHeight - 100) {
+                document.querySelectorAll('.skill-bar').forEach(bar => {
+                    const width = bar.getAttribute('data-width');
+                    bar.style.width = width;
+                    bar.style.transition = 'width 1.5s ease-out';
+                });
+            }
+        }
+        
+        // Initialize scroll animations
+        window.addEventListener('scroll', handleScrollAnimations);
+        window.addEventListener('load', handleScrollAnimations);
+        
+        // Add a subtle floating animation to elements
+        function initFloatingElements() {
+            const floatingElements = [
+                document.querySelector('h1'),
+                ...document.querySelectorAll('.skill-bar'),
+                document.querySelector('#cta-button')
+            ];
+            
+            floatingElements.forEach((element, index) => {
+                if (element) {
+                    element.style.animation = `float ${3 + index * 0.2}s ease-in-out ${index * 0.1}s infinite`;
+                }
+            });
+        }
+        
+        // Initialize floating animations
+        window.addEventListener('load', initFloatingElements);
+    </script>
+</body>
+</html>
