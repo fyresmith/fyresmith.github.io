@@ -162,13 +162,13 @@
                 </svg>
             </button>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-darkSecondary">
-                <a href="#home" class="block px-3 py-2 hover:bg-gray-800 rounded">Home</a>
-                <a href="#about" class="block px-3 py-2 hover:bg-gray-800 rounded">About</a>
-                <a href="#resume" class="block px-3 py-2 hover:bg-gray-800 rounded">Resume</a>
-                <a href="#projects" class="block px-3 py-2 hover:bg-gray-800 rounded">Projects</a>
-                <a href="#contact" class="block px-3 py-2 hover:bg-gray-800 rounded">Contact</a>
+        <div id="mobile-menu" class="hidden md:hidden fixed top-16 left-0 right-0 z-50 transform transition-all duration-300 ease-in-out opacity-0 -translate-y-10">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-darkSecondary shadow-lg rounded-b-lg border-t border-gray-700">
+                <a href="#home" class="block px-3 py-2 hover:bg-gray-800 rounded transition-colors">Home</a>
+                <a href="#about" class="block px-3 py-2 hover:bg-gray-800 rounded transition-colors">About</a>
+                <a href="#resume" class="block px-3 py-2 hover:bg-gray-800 rounded transition-colors">Resume</a>
+                <a href="#projects" class="block px-3 py-2 hover:bg-gray-800 rounded transition-colors">Projects</a>
+                <a href="#contact" class="block px-3 py-2 hover:bg-gray-800 rounded transition-colors">Contact</a>
             </div>
         </div>
     </nav>
@@ -349,10 +349,12 @@
                         <!-- Timeline Item 1 -->
                         <div class="relative mb-12 timeline-item animate-on-scroll stagger-delay-2">
                             <div class="p-6 bg-darkSecondary rounded-lg shadow-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                                <div class="flex justify-between items-start">
-                                    <h4 class="text-xl font-medium text-white">Bachelor of Science in Computer Engineering</h4>
-                                    <span class="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">2024-Present</span>
+                                <div class="flex items-start md:items-center mb-0 pb-0">
+                                    <h4 class="text-xl font-medium text-white md:mb-0 flex-1">Bachelor of Science in Computer Engineering</h4>
+                                    <span class="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm whitespace-nowrap shrink-0 ml-2">2024-Present</span>
                                 </div>
+
+
                                 <p class="text-gray-400 mt-1">Kennesaw State University</p>
                                 <p class="mt-4 text-gray-300">
                                     Focused on hardware design, embedded systems, and computer architecture. Coursework includes digital circuits, microprocessors, and signal processing.
@@ -368,9 +370,9 @@
                         <!-- Timeline Item 2 -->
                         <div class="relative mb-12 timeline-item animate-on-scroll stagger-delay-3">
                             <div class="p-6 bg-darkSecondary rounded-lg shadow-lg transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                                <div class="flex justify-between items-start">
-                                    <h4 class="text-xl font-medium text-white">Associates of Applied Science in Computer Programming</h4>
-                                    <span class="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">2020-2023</span>
+                                <div class="flex items-start md:items-center">
+                                    <h4 class="text-xl font-medium text-white md:mb-0 flex-1">Associates of Applied Science in Computer Programming</h4>
+                                    <span class="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm whitespace-nowrap shrink-0 ml-2">2020-2023</span>
                                 </div>
                                 <p class="text-gray-400 mt-1">Gwinnett Technical College</p>
                                 <p class="mt-4 text-gray-300">
@@ -593,19 +595,51 @@
         window.addEventListener('resize', handleMobileNavigation);
         window.addEventListener('load', handleMobileNavigation);
 
-        // Mobile menu toggle
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
             const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden');
+            
+            if (mobileMenu.classList.contains('hidden')) {
+                // Show the menu with animation
+                mobileMenu.classList.remove('hidden');
+                // Force a reflow before adding the transition classes
+                void mobileMenu.offsetWidth;
+                
+                // Animate in
+                mobileMenu.classList.remove('opacity-0', '-translate-y-10');
+                mobileMenu.classList.add('opacity-100', 'translate-y-0');
+            } else {
+                // Animate out
+                mobileMenu.classList.remove('opacity-100', 'translate-y-0');
+                mobileMenu.classList.add('opacity-0', '-translate-y-10');
+                
+                // Hide after animation completes
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                }, 300);
+            }
+        });
+
+        // Close menu when a link is clicked
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                const mobileMenu = document.getElementById('mobile-menu');
+                mobileMenu.classList.remove('opacity-100', 'translate-y-0');
+                mobileMenu.classList.add('opacity-0', '-translate-y-10');
+                
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                }, 300);
+            });
+        });
+
+        // Add this to make menu links close the menu when clicked
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
         });
 
         document.querySelector('nav').classList.add('transition-opacity', 'duration-300');
-
-        // Mobile menu toggle
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden');
-        });
 
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
